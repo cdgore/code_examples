@@ -9,19 +9,21 @@ class MaxStocks(object):
     
         :param arr: array of stock prices
     
-        :returns: max_profit
+        :returns:
+            (max_profit, buy_index, sell_index)
         '''
-        return max([
-            max([
-                b - a
-                for b
-                in arr
-                if b >= a
-            ])
-            for a
-            in arr
-        ])
         
+        max_profit = float('-inf')
+        buy_index = -1
+        sell_index = -1
+        for i, a in enumerate(arr):
+            for j, b in enumerate(arr[i:]):
+                if b - a > max_profit:
+                    max_profit = b - a
+                    buy_index = i
+                    sell_index = j
+        return (max_profit, buy_index, sell_index)
+
     def dp_stocks(self, arr):
         ''' Given an array of stock prices, maximize profit
         buying exactly once and selling exactly once
